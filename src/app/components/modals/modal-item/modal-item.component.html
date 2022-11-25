@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Item</h2>
+<mat-dialog-content class="mat-typography">
+
+    <div [formGroup]="form">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" formControlName="name">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Description</mat-label>
+            <input matInput type="text" formControlName="description">
+        </mat-form-field>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button class="btn" mat-button (click)="close()">Cancel</button>
+    <button class="btn btn-danger" mat-button (click)="save()" [disabled]="!form.valid">Save</button>
+</mat-dialog-actions>

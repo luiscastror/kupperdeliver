@@ -17,10 +17,49 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>Units</mat-label>
-            <mat-select formControlName="unit">
+            <mat-select formControlName="unit" multiple>
                 <mat-option *ngFor="let unit of units" [value]="unit.name">{{unit.name}}</mat-option>
             </mat-select>
         </mat-form-field>
+
+        <div class="contenedor">
+            <div class="contenedor_formulario">
+                <h1 class="is-size-1">Subir archivos a Cloud Storage</h1>
+                <p class="download" *ngIf="finalizado">URL de descarga: <a href="{{ URLPublica }}" target="_blank">Descargar</a></p>
+                <div class="file has-name is-boxed">
+                    <label class="file-label">
+                        <input class="file-input" type="file" formControlName="image" (change)="cambioArchivo($event)" multiple>
+                        <span class="file-cta">
+                            <span class="file-label">
+                                Elegir un archivo…
+                            </span>
+                        </span>
+                        <span class="file-name">
+                            {{ mensajeArchivo }}
+                        </span>
+                    </label>
+                </div>
+                <hr>
+                <progress *ngIf="porcentaje > 0 && porcentaje < 100" class="progress is-large is-success" value="{{porcentaje}}" max="100">{{porcentaje}}%</progress>
+                <button (click)="subirArchivo()" [ngClass]="{'button': true, 'is-success': true, 'is-large': true, 'is-loading': porcentaje > 0 && porcentaje < 100}" [disabled]="!form.valid && (porcentaje > 0 && porcentaje < 100)">Subir archivo</button>
+            </div>
+        </div>
+
+
+        <div class="dropzone" dropzone (hovered)="toggleHover($event)" (dropped)="onDrop($event)" [class.hovering]="isHovering">
+
+
+            <h3>AngularFire Drop Zone</h3>
+            <p>Drag and Drop a File</p>
+        </div>
+
+        <h3>Uploads</h3>
+
+        <div *ngFor="let file of files">
+            {{file | json}}
+            <!-- <upload-task [file]="file"></upload-task> -->
+        </div>
+
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

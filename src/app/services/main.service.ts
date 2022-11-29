@@ -1,6 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,7 +10,8 @@ import { Observable } from 'rxjs';
 export class MainService {
 
   constructor(
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    public storage: AngularFireStorage
   ) { }
 
   // Create a document
@@ -44,6 +46,16 @@ export class MainService {
     return this.firestore.collection('cats').doc(documentId).snapshotChanges();
   }
 
+
+  //Tarea para subir archivo
+  public tareaCloudStorage(nombreArchivo: string, datos: any) {
+    return this.storage.upload(nombreArchivo, datos);
+  }
+
+  //Referencia del archivo
+  public referenciaCloudStorage(nombreArchivo: string) {
+    return this.storage.ref(nombreArchivo);
+  }
 
 
 }

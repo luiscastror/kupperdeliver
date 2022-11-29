@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MainService } from 'src/app/services/main.service';
 
 @Component({
   selector: 'app-modal-item',
@@ -9,7 +10,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ModalItemComponent implements OnInit {
 
+  isEdit: boolean = false;
+
   form = new FormGroup({
+    id: new FormControl(),
     name: new FormControl('', Validators.required),
     description: new FormControl(),
     image: new FormControl(),
@@ -18,10 +22,19 @@ export class ModalItemComponent implements OnInit {
   });
 
   constructor(
-    public dialogRef: MatDialogRef<ModalItemComponent>
-  ) { }
+    public dialogRef: MatDialogRef<ModalItemComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public MainService: MainService
+  ) {
+    this.isEdit = data != null ? true : false;
+  }
 
   ngOnInit(): void {
+    this.loadCategories();
+    this.loadUnit();
+    if (this.isEdit) {
+      this.form.setValue(this.data)
+    }
   }
 
   close() {
@@ -29,7 +42,28 @@ export class ModalItemComponent implements OnInit {
   }
 
   save() {
-    this.dialogRef.close(this.form.value);
+    this.dialogRef.close({
+      payload: this.form.value,
+      edit: this.isEdit
+    });
+  }
+
+  categories: any[] = [];
+  loadCategories() {
+    this.MainService.get_collection('categories').subscribe(resp => {
+      resp.forEach((doc: any) => {
+        this.categories.push({ ...doc.data(), id: doc.id });
+      });
+    })
+  }
+
+  units: any[] = [];
+  loadUnit() {
+    this.MainService.get_collection('units').subscribe(resp => {
+      resp.forEach((doc: any) => {
+        this.units.push({ ...doc.data(), id: doc.id });
+      });
+    })
   }
 
 }

@@ -1,5 +1,15 @@
-<div class="row">
+<div class="row mb-3">
     <div class="col-12">
-        <button class="btn btn-danger" (click)="new()">New</button>
+        <button class="btn btn-danger" (click)="modal()">New</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-md-3 mb-3" *ngFor="let item of items" (click)="modal(item)">
+        <div class="card p-3 cursor-pointer">
+            <p class="text-truncate fw-bold h4">{{item.name}}</p>
+            <p class="text-truncate">{{item.description}}</p>
+            <p class="text-truncate">{{item.category}}</p>
+            <p class="text-truncate">{{item.unit}}</p>
+        </div>
     </div>
 </div>

@@ -46,16 +46,4 @@ export class MainService {
     return this.firestore.collection('cats').doc(documentId).snapshotChanges();
   }
 
-
-  //Tarea para subir archivo
-  public tareaCloudStorage(nombreArchivo: string, datos: any) {
-    return this.storage.upload(nombreArchivo, datos);
-  }
-
-  //Referencia del archivo
-  public referenciaCloudStorage(nombreArchivo: string) {
-    return this.storage.ref(nombreArchivo);
-  }
-
-
 }

@@ -33,7 +33,7 @@ export class ItemsComponent implements OnInit {
   modal(data: any = null) {
     const dialogRef = this.MatDialog.open(ModalItemComponent, {
       minWidth: '40%',
-      maxWidth: '80%',
+      maxWidth: '70%',
       data: data != null ? data : null
     });
     dialogRef.afterClosed().subscribe((data) => {

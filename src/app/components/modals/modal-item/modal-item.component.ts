@@ -45,7 +45,8 @@ export class ModalItemComponent implements OnInit {
     this.loadCategories();
     this.loadUnit();
     if (this.isEdit) {
-      this.form.setValue(this.data)
+      this.form.setValue(this.data);
+      this.files = this.data.image;
     }
   }
 
@@ -54,6 +55,13 @@ export class ModalItemComponent implements OnInit {
   }
 
   save() {
+
+    if (this.files) {
+      this.files.map((f: any) => {
+        delete f.file;
+      })
+      this.form.value['image'] = this.files;
+    }
     this.dialogRef.close({
       payload: this.form.value,
       edit: this.isEdit
@@ -79,106 +87,35 @@ export class ModalItemComponent implements OnInit {
   }
 
 
-  // files: any[] = [];
+  files: any = [];
   public cambioArchivo(event: any) {
-    console.log(event)
     if (event.target.files.length > 0) {
       for (let i = 0; i < event.target.files.length; i++) {
-
         this.files.push({
           file: event.target.files[i],
-          name: event.target.files[i].name
+          name: event.target.files[i].name,
+          url: null
         })
-
-        // this.mensajeArchivo = `Archivo preparado: ${event.target.files[i].name}`;
-        // this.nombreArchivo = event.target.files[i].name;
-        // this.datosFormulario.delete('image');
-        // this.datosFormulario.append('image', event.target.files[i], event.target.files[i].name)
-        this.datosFormulario.append('image', event.target.files[i], event.target.files[i].name)
       }
-      console.log(this.files)
-
-    } else {
-      this.mensajeArchivo = 'No hay un archivo seleccionado';
+      this.files.forEach((element: any) => {
+        if (element.file) {
+          const path = 'items/' + Date.now() + element.name;
+          this.MainService.storage.upload(path, element.file);
+          setTimeout(() => {
+            const ref = this.MainService.storage.ref(path);
+            ref.getDownloadURL().subscribe((URL) => {
+              element.url = URL
+            }, err => {
+              console.log(err)
+            });
+          }, 1000);
+        }
+      });
     }
   }
 
-  //Sube el archivo a Cloud Storage
-  public subirArchivo() {
-    let archivo = this.datosFormulario.get('image');
-    console.log(archivo)
-    let tarea = this.MainService.tareaCloudStorage(this.nombreArchivo, archivo);
-    console.log(tarea)
-    // let referencia = this.MainService.referenciaCloudStorage(this.nombreArchivo);
-
-    //Cambia el porcentaje
-    tarea.percentageChanges().subscribe((porcentaje: any) => {
-      console.log(porcentaje)
-      this.porcentaje = Math.round(porcentaje);
-      if (this.porcentaje == 100) {
-        this.finalizado = true;
-      }
-    });
-
-    // referencia.getDownloadURL().subscribe((URL) => {
-    //   this.URLPublica = URL;
-    // });
-  }
 
 
-
-
-  isHovering: boolean = false;
-
-  files: any[] = [];
-
-  toggleHover(event: boolean) {
-    this.isHovering = event;
-  }
-
-  onDrop(files: FileList) {
-    for (let i = 0; i < files.length; i++) {
-      this.files.push(files.item(i));
-      this.saveFile(files.item(i))
-    }
-    console.log(this.files)
-  }
-
-
-  file: any;
-  task: any;
-  percentage: any;
-  snapshot: any;
-  downloadURL: any;
-  saveFile(file: any) {
-
-    this.file = file;
-    // The storage path
-    const path = `test/${Date.now()}_${this.file.name}`;
-
-    // Reference to storage bucket
-    const ref = this.MainService.storage.ref(path);
-
-    // The main task
-    this.task = this.MainService.storage.upload(path, this.file);
-
-    // Progress monitoring
-    this.percentage = this.task.percentageChanges();
-
-    this.snapshot = this.task.snapshotChanges().pipe(
-      tap(console.log),
-      // The file's download URL
-      finalize(async () => {
-        this.downloadURL = await ref.getDownloadURL().toPromise();
-
-        // this.db.collection('files').add({ downloadURL: this.downloadURL, path });
-      }),
-    );
-  }
-
-  isActive(snapshot: any) {
-    return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
-  }
 }
 
 

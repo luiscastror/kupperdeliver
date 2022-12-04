@@ -19,6 +19,8 @@ import { environment } from 'src/environments/environment';
 import { ModalItemComponent } from './components/modals/modal-item/modal-item.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ModalCategoryComponent } from './components/modals/modal-category/modal-category.component';
+import { ModalUnitComponent } from './components/modals/modal-unit/modal-unit.component';
+import { ModalStoreComponent } from './components/modals/modal-store/modal-store.component';
 
 //Pages
 import { CategoriesComponent } from './pages/categories/categories.component';
@@ -26,13 +28,12 @@ import { UnitsComponent } from './pages/units/units.component';
 import { UsersComponent } from './pages/users/users.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { ItemsComponent } from './pages/items/items.component';
+import { StoresComponent } from './pages/stores/stores.component';
 
 //Material
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { ModalUnitComponent } from './components/modals/modal-unit/modal-unit.component';
-import { DropzoneDirective } from './dropzone.directive';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { DropzoneDirective } from './dropzone.directive';
     UnitsComponent,
     ModalCategoryComponent,
     ModalUnitComponent,
-    DropzoneDirective
+    StoresComponent,
+    ModalStoreComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,8 @@ import { DropzoneDirective } from './dropzone.directive';
     AngularFireFunctionsModule,
     AngularFireMessagingModule,
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+
     // AngularFireModule.initializeApp(environment.firebaseConfig),
     // AngularFireDatabaseModule
   ],

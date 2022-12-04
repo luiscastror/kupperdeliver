@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-12 col-md-2 mb-3" *ngFor="let item of items" (click)="modal(item)">
         <div class="card p-3 cursor-pointer">
-            <img [src]="item.image[0].url">
+            <img [src]="item.image[0] ? item.image[0].url : '/assets/images/loading.webp'">
             <p class="text-truncate fw-bold h4">{{item.name}}</p>
             <p class="text-truncate">{{item.description}}</p>
             <p class="text-truncate">{{item.category}}</p>

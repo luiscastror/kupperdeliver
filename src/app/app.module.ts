@@ -34,6 +34,8 @@ import { StoresComponent } from './pages/stores/stores.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { BrandsComponent } from './pages/brands/brands.component';
+import { ModalBrandComponent } from './components/modals/modal-brand/modal-brand.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { MatSelectModule } from '@angular/material/select';
     ModalCategoryComponent,
     ModalUnitComponent,
     StoresComponent,
-    ModalStoreComponent
+    ModalStoreComponent,
+    BrandsComponent,
+    ModalBrandComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +69,6 @@ import { MatSelectModule } from '@angular/material/select';
     AngularFireMessagingModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-
     // AngularFireModule.initializeApp(environment.firebaseConfig),
     // AngularFireDatabaseModule
   ],

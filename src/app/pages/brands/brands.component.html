@@ -1,0 +1,12 @@
+<div class="row mb-3">
+    <div class="col-12">
+        <button class="btn btn-danger" (click)="modal()">New</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-md-3 mb-3" *ngFor="let item of items" (click)="modal(item)">
+        <div class="card p-3 cursor-pointer">
+            {{item.name}}
+        </div>
+    </div>
+</div>

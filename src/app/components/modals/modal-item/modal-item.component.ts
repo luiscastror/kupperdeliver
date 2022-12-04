@@ -14,14 +14,6 @@ import { finalize, tap } from 'rxjs/operators';
 })
 export class ModalItemComponent implements OnInit {
 
-  public mensajeArchivo = 'No hay un archivo seleccionado';
-  public datosFormulario = new FormData();
-  public nombreArchivo = '';
-  public URLPublica = '';
-  public porcentaje = 0;
-  public finalizado = false;
-
-
   isEdit: boolean = false;
 
   form = new FormGroup({
@@ -31,6 +23,7 @@ export class ModalItemComponent implements OnInit {
     image: new FormControl(),
     unit: new FormControl(),
     category: new FormControl(),
+    brand: new FormControl(),
   });
 
   constructor(
@@ -43,9 +36,10 @@ export class ModalItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCategories();
-    this.loadUnit();
+    this.loadUnits();
+    this.loadBrands();
     if (this.isEdit) {
-      this.form.setValue(this.data);
+      this.form.patchValue(this.data);
       this.files = this.data.image;
     }
   }
@@ -55,7 +49,6 @@ export class ModalItemComponent implements OnInit {
   }
 
   save() {
-
     if (this.files) {
       this.files.map((f: any) => {
         delete f.file;
@@ -78,7 +71,7 @@ export class ModalItemComponent implements OnInit {
   }
 
   units: any[] = [];
-  loadUnit() {
+  loadUnits() {
     this.MainService.get_collection('units').subscribe(resp => {
       resp.forEach((doc: any) => {
         this.units.push({ ...doc.data(), id: doc.id });
@@ -86,6 +79,14 @@ export class ModalItemComponent implements OnInit {
     })
   }
 
+  brands: any[] = [];
+  loadBrands() {
+    this.MainService.get_collection('brands').subscribe(resp => {
+      resp.forEach((doc: any) => {
+        this.brands.push({ ...doc.data(), id: doc.id });
+      });
+    })
+  }
 
   files: any = [];
   public cambioArchivo(event: any) {

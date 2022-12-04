@@ -21,6 +21,12 @@
                 <mat-option *ngFor="let unit of units" [value]="unit.name">{{unit.name}}</mat-option>
             </mat-select>
         </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Brand</mat-label>
+            <mat-select formControlName="brand" multiple>
+                <mat-option *ngFor="let brand of brands" [value]="brand.name">{{brand.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
 
         <input class="mb-3" type="file" (change)="cambioArchivo($event)" multiple>
 

@@ -15,6 +15,11 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
 import { environment } from 'src/environments/environment';
 
+// NGRX 
+import { StoreModule } from '@ngrx/store';
+import { mainReducer } from './services/main.reducer';
+
+
 // Components
 import { ModalItemComponent } from './components/modals/modal-item/modal-item.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -69,6 +74,7 @@ import { ModalBrandComponent } from './components/modals/modal-brand/modal-brand
     AngularFireMessagingModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+    StoreModule.forRoot({ count: mainReducer })
     // AngularFireModule.initializeApp(environment.firebaseConfig),
     // AngularFireDatabaseModule
   ],

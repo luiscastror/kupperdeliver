@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 import { ModalItemComponent } from 'src/app/components/modals/modal-item/modal-item.component';
 import { MainService } from 'src/app/services/main.service';
 
@@ -47,5 +48,23 @@ export class ItemsComponent implements OnInit {
       }
     });
   }
+
+
+  count$!: Observable<number>;
+
+
+
+  increment() {
+    // TODO: Dispatch an increment action
+  }
+
+  decrement() {
+    // TODO: Dispatch a decrement action
+  }
+
+  reset() {
+    // TODO: Dispatch a reset action
+  }
+
 
 }

@@ -16,8 +16,8 @@ import { AngularFireStorageModule } from "@angular/fire/storage";
 import { environment } from 'src/environments/environment';
 
 // NGRX 
-import { StoreModule } from '@ngrx/store';
-import { mainReducer } from './services/main.reducer';
+// import { StoreModule } from '@ngrx/store';
+// import { mainReducer } from './services/main.reducer';
 
 
 // Components
@@ -74,7 +74,7 @@ import { ModalBrandComponent } from './components/modals/modal-brand/modal-brand
     AngularFireMessagingModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    StoreModule.forRoot({ count: mainReducer })
+    // StoreModule.forRoot({ count: mainReducer })
     // AngularFireModule.initializeApp(environment.firebaseConfig),
     // AngularFireDatabaseModule
   ],

@@ -116,6 +116,9 @@ export class ModalItemComponent implements OnInit {
   }
 
 
+  deleteImage(index: number) {
+    this.files.splice(index, 1);
+  }
 
 }
 

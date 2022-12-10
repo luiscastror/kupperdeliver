@@ -31,9 +31,10 @@
         <input class="mb-3" type="file" (change)="cambioArchivo($event)" multiple>
 
         <div class="row">
-            <div class="col-12 col-md-4 mb-2" *ngFor="let file of files">
+            <div class="col-12 col-md-4 mb-2" *ngFor="let file of files; index as index">
                 <div class="card">
                     <img [src]="file.url">
+                    <button class="btn btn-danger btn-block" (click)="deleteImage(index)">Delete image</button>
                 </div>
             </div>
         </div>
